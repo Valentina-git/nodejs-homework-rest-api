@@ -122,7 +122,7 @@ const update = async (req, res, next) => {
 	}
 };
 
-module.export = {
+module.exports = {
 	get,
 	getById,
 	add,
