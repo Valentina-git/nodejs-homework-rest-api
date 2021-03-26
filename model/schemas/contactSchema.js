@@ -43,6 +43,6 @@ const contactSchema = new Schema(
 	{ versionKey: false, timestamps: true }
 );
 
-const Contact = new model("contact", contactSchema);
+const Contact = model("contact", contactSchema);
 
-module.export = Contact;
+module.exports = Contact;
