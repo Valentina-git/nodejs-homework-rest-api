@@ -2,10 +2,29 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 
+///////////////////////////////////////////////////
+
+// const { MongoClient } = require("mongodb");
+// const dotenv = require("dotenv");
+// dotenv.config();
+// const dbURI = process.env.DB_HOST;
+
+// async function run() {
+// 	const client = await new MongoClient(dbURI, {
+// 		useUnifiedTopology: true,
+// 	}).connect();
+// 	const resultCollection = await client
+// 		.db("db-contacts")
+// 		.collection("contacts")
+// 		.find()
+// 		.toArray();
+// }
+// run();
+
+///////////////////////////////////////////
+
 const contactsRouter = require("./routes/api/contacts");
-
 const app = express();
-
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
