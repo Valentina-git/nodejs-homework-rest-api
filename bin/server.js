@@ -1,12 +1,13 @@
-const app = require("../app");
+const app = require('../app');
 
 const PORT = process.env.PORT || 3000;
 
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 dotenv.config();
 
 const { DB_HOST } = process.env;
+
 mongoose.Promise = global.Promise;
 
 const connection = mongoose.connect(DB_HOST, {
