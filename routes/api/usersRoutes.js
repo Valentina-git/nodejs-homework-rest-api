@@ -7,7 +7,7 @@ const guard = require('../../helpers/guard');
 router.post('/register', userValidate, ctrlUsers.reg);
 router.post('/login', userValidate, ctrlUsers.login);
 router.post('/logout', guard, ctrlUsers.logout);
-router.get('/register', guard, ctrlUsers.current);
-router.patch('/register', guard, ctrlUsers.patch);
+router.get('/current', guard, ctrlUsers.current);
+router.patch('/update', guard, ctrlUsers.patch);
 
 module.exports = router;

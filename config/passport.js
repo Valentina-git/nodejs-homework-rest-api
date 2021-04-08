@@ -6,12 +6,11 @@ dotenv.config();
 const { findUserById } = require('../model/users');
 
 const { SECRET_KEY } = process.env;
-
-const { ExtractJWT, Strategy } = passportJWT;
+const { ExtractJwt, Strategy } = passportJWT;
 
 const jwtOptions = {
 	secretOrKey: SECRET_KEY,
-	jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 };
 
 passport.use(
