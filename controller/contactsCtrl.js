@@ -4,17 +4,17 @@ const {
 	removeContact,
 	addContact,
 	updateContact,
-} = require("../model/index");
+} = require('../model/contacts');
 
 const get = async (req, res, next) => {
 	try {
-		const contacts = await listContacts();
-		console.log("contacts", contacts);
+		const contacts = await listContacts(req.user.id, req.query);
+		console.log('contacts', contacts);
 		res.json({
-			status: "success",
+			status: 'success',
 			code: 200,
 			data: {
-				contacts,
+				...contacts,
 			},
 		});
 	} catch (err) {
@@ -27,7 +27,7 @@ const getById = async (req, res, next) => {
 		const contact = await getContactById(req.params.contactId);
 		if (contact) {
 			res.json({
-				status: "success",
+				status: 'success',
 				code: 200,
 				data: {
 					contact,
@@ -35,9 +35,9 @@ const getById = async (req, res, next) => {
 			});
 		} else {
 			res.status(404).json({
-				status: "Error",
+				status: 'Error',
 				code: 404,
-				message: "Not found",
+				message: 'Not found',
 			});
 		}
 	} catch (err) {
@@ -47,21 +47,21 @@ const getById = async (req, res, next) => {
 
 const add = async (req, res, next) => {
 	try {
-		const requiredFields = ["name", "email", "phone"];
+		const requiredFields = ['name', 'email', 'phone'];
 
 		if (!req.body.name || !req.body.email || !req.body.phone) {
 			const errMessage = requiredFields
 				.filter(item => !Object.keys(req.body).includes(item))
-				.reduce((acc, string) => `${acc} missing required ${string} field;`, "");
+				.reduce((acc, string) => `${acc} missing required ${string} field;`, '');
 
 			res.status(400).json({
 				message: errMessage,
 			});
 		} else {
-			const data = await addContact(req.body);
+			const data = await addContact({ ...req.body, owner: req.user.id });
 
 			res.json({
-				status: "success",
+				status: 'success',
 				code: 201,
 				data,
 			});
@@ -77,16 +77,16 @@ const remove = async (req, res, next) => {
 
 		if (contact) {
 			res.json({
-				status: "success",
+				status: 'success',
 				code: 200,
-				message: "contact deleted",
+				message: 'contact deleted',
 				data: contact,
 			});
 		} else {
 			res.status(404).json({
-				status: "Error",
+				status: 'Error',
 				code: 404,
-				message: "Not found",
+				message: 'Not found',
 			});
 		}
 	} catch (err) {
@@ -98,22 +98,22 @@ const update = async (req, res, next) => {
 	try {
 		if (!req.body) {
 			res.status(400).json({
-				message: "missing fields",
+				message: 'missing fields',
 			});
 		} else {
 			const data = await updateContact(req.params.contactId, req.body);
 
 			if (data) {
 				res.json({
-					status: "success",
+					status: 'success',
 					code: 200,
 					data,
 				});
 			} else {
 				res.status(404).json({
-					status: "Error",
+					status: 'Error',
 					code: 404,
-					message: "Not found",
+					message: 'Not found',
 				});
 			}
 		}
