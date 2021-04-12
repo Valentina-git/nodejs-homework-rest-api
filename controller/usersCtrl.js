@@ -156,6 +156,7 @@ const patch = async (req, res, next) => {
 };
 
 const avatar = async (req, res, next) => {
+	console.log('ok');
 	const { path: tempName, originalname } = req.file;
 	const { id } = req.user;
 
