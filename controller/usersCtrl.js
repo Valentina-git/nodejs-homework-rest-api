@@ -23,6 +23,8 @@ const folderExists = require('../helpers/folderExists');
 
 const { SECRET_KEY, UPLOADDIR } = process.env;
 
+const uploadDirectory = path.join(process.cwd(), UPLOADDIR);
+
 const reg = async (req, res, next) => {
 	try {
 		const { email } = req.body;

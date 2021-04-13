@@ -28,8 +28,8 @@ const userSchema = new Schema({
 			message: 'Invalid type of subscription',
 		},
 		default: 'free',
-		avatarURL: String,
 	},
+	avatarURL: String,
 	token: String,
 });
 
