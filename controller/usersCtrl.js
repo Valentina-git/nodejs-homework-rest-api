@@ -4,7 +4,6 @@ const gravatar = require('gravatar');
 const Jimp = require('jimp');
 
 const { v4: uuidv4 } = require('uuid');
-const sendMail = require('../helpers/sendMail');
 
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
@@ -17,10 +16,13 @@ const {
 	updateToken,
 	patchSub,
 	patchAvatar,
+	findByVerifyToken,
+	updateVerifyToken,
 } = require('../model/users');
 
 const { Subscription } = require('../helpers/constants');
 const folderExists = require('../helpers/folderExists');
+const sendMail = require('../helpers/sendMail');
 
 const { SECRET_KEY, UPLOADDIR } = process.env;
 
@@ -43,9 +45,10 @@ const reg = async (req, res, next) => {
 			s: '250',
 			format: 'jpg',
 		});
+
 		const verifyToken = uuidv4();
 		await sendMail(verifyToken, email);
-		const newUser = await createNewUser({ ...req.body, avatarURL });
+		const newUser = await createNewUser({ ...req.body, avatarURL, verifyToken });
 
 		res.status(201).json({
 			status: 'success',
