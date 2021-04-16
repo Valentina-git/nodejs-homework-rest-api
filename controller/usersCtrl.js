@@ -32,6 +32,7 @@ const reg = async (req, res, next) => {
 	try {
 		const { email } = req.body;
 		const user = await findUserByEmail(email);
+
 		if (user) {
 			return res.status(409).json({
 				status: 'error',
@@ -48,6 +49,7 @@ const reg = async (req, res, next) => {
 
 		const verifyToken = uuidv4();
 		await sendMail(verifyToken, email);
+
 		const newUser = await createNewUser({ ...req.body, avatarURL, verifyToken });
 
 		res.status(201).json({
@@ -69,7 +71,7 @@ const login = async (req, res, next) => {
 	try {
 		const { email, password } = req.body;
 		const user = await findUserByEmail(email);
-
+		console.log(user);
 		if (!user || !(await user.validPassword(password)) || !user.verify) {
 			return res.status(400).json({
 				status: 'error',
